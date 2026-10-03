@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="900" viewBox="0 0 1920 900" role="img" aria-labelledby="title desc">
+  <title id="title">Iterative task sampling and reward identification</title>
+  <desc id="desc">A scene induces a task probability distribution. Sampling produces task branches, each with its task-conditioned reward. One selected branch reaches a new scene and repeats the process.</desc>
+
+  <defs>
+    <linearGradient id="sceneBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EAF5FF"/>
+      <stop offset="1" stop-color="#F5FAFF"/>
+    </linearGradient>
+    <linearGradient id="selectedBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ECFBF7"/>
+      <stop offset="1" stop-color="#F8FFFC"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="7" result="blur"/>
+      <feOffset in="blur" dx="0" dy="5" result="offsetBlur"/>
+      <feComponentTransfer in="offsetBlur" result="shadowAlpha">
+        <feFuncA type="linear" slope="0.10"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="shadowAlpha"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="arrowNavy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#24405F"/>
+    </marker>
+    <marker id="arrowTeal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1B9E87"/>
+    </marker>
+    <style>
+      text { font-family: Inter, Arial, Helvetica, sans-serif; fill: #172B46; }
+      .title { font-size: 34px; font-weight: 700; letter-spacing: -0.4px; }
+      .subtitle { font-size: 17px; fill: #617189; }
+      .stage { font-size: 17px; font-weight: 700; fill: #456079; letter-spacing: 1.3px; }
+      .card-title { font-size: 21px; font-weight: 700; }
+      .small { font-size: 15px; fill: #65758A; }
+      .tiny { font-size: 13px; fill: #76869A; }
+      .prob { font-size: 16px; font-weight: 700; fill: #172B46; }
+      .math { font-family: Georgia, 'Times New Roman', serif; font-size: 18px; font-style: italic; }
+      .branch { fill: none; stroke: #24405F; stroke-width: 3.2; marker-end: url(#arrowNavy); }
+      .branch-selected { fill: none; stroke: #1B9E87; stroke-width: 5; marker-end: url(#arrowTeal); }
+      .guide { stroke: #DDE6EF; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="900" fill="#FFFFFF"/>
+
+  <!-- Heading -->
+  <text x="70" y="62" class="title">Iterative Task Sampling and Reward Identification</text>
+  <text x="70" y="94" class="subtitle">Branches are determined by sampled-task probabilities; rewards are identified after a task is sampled.</text>
+
+  <!-- Stage headers -->
+  <text x="70" y="145" class="stage">① SCENE + TASK DISTRIBUTION</text>
+  <text x="665" y="145" class="stage">② FIRST SAMPLING + REWARD IDENTIFICATION</text>
+  <text x="1190" y="145" class="stage">③ RE-SAMPLING FROM SELECTED BRANCH</text>
+  <line x1="70" y1="162" x2="1850" y2="162" class="guide"/>
+
+  <!-- Initial scene card -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="280" width="205" height="290" rx="20" fill="url(#sceneBg)" stroke="#BBD7EE" stroke-width="2"/>
+  </g>
+  <text x="172.5" y="319" text-anchor="middle" class="card-title">Scene <tspan class="math">s₀</tspan></text>
+  <rect x="94" y="343" width="157" height="146" rx="13" fill="#FFFFFF" stroke="#C8DBEB"/>
+  <!-- Simple tabletop/robot scene icon -->
+  <path d="M106 453 H238" stroke="#90A9BF" stroke-width="7" stroke-linecap="round"/>
+  <path d="M128 453 V475 M218 453 V475" stroke="#90A9BF" stroke-width="6" stroke-linecap="round"/>
+  <rect x="186" y="412" width="25" height="25" rx="4" fill="#F4A261"/>
+  <circle cx="130" cy="386" r="14" fill="#436B91"/>
+  <path d="M130 400 L148 421 L173 393" fill="none" stroke="#436B91" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M173 393 L190 408" fill="none" stroke="#436B91" stroke-width="10" stroke-linecap="round"/>
+  <path d="M187 405 l11 -7 M188 408 l12 5" stroke="#24405F" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="130" cy="386" r="5" fill="#D8ECFA"/>
+  <text x="172.5" y="523" text-anchor="middle" class="small">shared visual state</text>
+  <text x="172.5" y="547" text-anchor="middle" class="math">observation o₀</text>
+
+  <!-- Arrow scene to task distribution -->
+  <path d="M275 425 H314" class="branch"/>
+
+  <!-- First task probability chart -->
+  <g filter="url(#shadow)">
+    <rect x="325" y="240" width="270" height="370" rx="20" fill="#FFFFFF" stroke="#CEDAE6" stroke-width="2"/>
+  </g>
+  <text x="460" y="279" text-anchor="middle" class="card-title">Task sampling</text>
+  <text x="460" y="305" text-anchor="middle" class="math">π(τ | s₀)</text>
+
+  <!-- chart guides -->
+  <line x1="365" y1="512" x2="557" y2="512" stroke="#9DADBD" stroke-width="1.5"/>
+  <line x1="365" y1="340" x2="365" y2="512" stroke="#9DADBD" stroke-width="1.5"/>
+  <line x1="365" y1="426" x2="557" y2="426" stroke="#E3EAF1" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <text x="352" y="431" text-anchor="end" class="tiny">0.5</text>
+  <text x="352" y="345" text-anchor="end" class="tiny">1.0</text>
+  <rect x="390" y="426" width="55" height="86" rx="7" fill="#2AA98F"/>
+  <rect x="476" y="426" width="55" height="86" rx="7" fill="#F4A261"/>
+  <text x="417.5" y="412" text-anchor="middle" class="prob">0.50</text>
+  <text x="503.5" y="412" text-anchor="middle" class="prob">0.50</text>
+  <text x="417.5" y="539" text-anchor="middle" class="small">Task 1</text>
+  <text x="503.5" y="539" text-anchor="middle" class="small">Task 2</text>
+  <text x="460" y="579" text-anchor="middle" class="small">sample <tspan class="math">τ ∼ π(τ | s₀)</tspan></text>
+
+  <!-- First sampling junction -->
+  <path d="M595 425 H632" class="branch"/>
+  <circle cx="676" cy="425" r="40" fill="#24405F" filter="url(#shadow)"/>
+  <text x="676" y="420" text-anchor="middle" style="font-size:14px;font-weight:700;fill:#FFFFFF;letter-spacing:.5px">SAMPLE</text>
+  <text x="676" y="440" text-anchor="middle" style="font-size:13px;fill:#CFE4F3">one task</text>
+
+  <!-- First pair of probability-driven branches -->
+  <path d="M707 400 C748 365, 748 280, 785 255" class="branch-selected"/>
+  <path d="M707 450 C748 485, 748 625, 785 645" class="branch"/>
+  <rect x="716" y="298" width="88" height="31" rx="15.5" fill="#DDF5EF"/>
+  <text x="760" y="319" text-anchor="middle" class="prob" style="fill:#147764">p = 0.50</text>
+  <rect x="716" y="548" width="88" height="31" rx="15.5" fill="#FFF0E3"/>
+  <text x="760" y="569" text-anchor="middle" class="prob" style="fill:#AF5E1E">p = 0.50</text>
+
+  <!-- omitted branches indicator -->
+  <circle cx="751" cy="403" r="4" fill="#A9B6C4"/>
+  <circle cx="751" cy="425" r="4" fill="#A9B6C4"/>
+  <circle cx="751" cy="447" r="4" fill="#A9B6C4"/>
+  <text x="770" y="430" class="tiny">other branches omitted</text>
+
+  <!-- Sampled Task 1 card -->
+  <g filter="url(#shadow)">
+    <rect x="800" y="187" width="285" height="205" rx="20" fill="url(#selectedBg)" stroke="#1B9E87" stroke-width="3"/>
+  </g>
+  <rect x="820" y="205" width="102" height="29" rx="14.5" fill="#1B9E87"/>
+  <text x="871" y="225" text-anchor="middle" style="font-size:13px;font-weight:700;fill:#FFFFFF;letter-spacing:.6px">SELECTED</text>
+  <text x="820" y="270" class="card-title">Sampled Task 1 <tspan class="math">(τ₁)</tspan></text>
+  <line x1="820" y1="288" x2="1062" y2="288" stroke="#C9EAE2" stroke-width="1.5"/>
+  <text x="820" y="319" class="small" style="font-weight:700;fill:#69479A">Reward identification</text>
+  <rect x="820" y="335" width="242" height="38" rx="10" fill="#F1ECFA"/>
+  <text x="941" y="360" text-anchor="middle" class="math" style="fill:#69479A">r₁ = R(s₀, τ₁)</text>
+
+  <!-- Sampled Task 2 card -->
+  <g filter="url(#shadow)">
+    <rect x="800" y="558" width="285" height="205" rx="20" fill="#FFFFFF" stroke="#F0B47E" stroke-width="2"/>
+  </g>
+  <text x="820" y="610" class="card-title">Sampled Task 2 <tspan class="math">(τ₂)</tspan></text>
+  <line x1="820" y1="630" x2="1062" y2="630" stroke="#F3DDCA" stroke-width="1.5"/>
+  <text x="820" y="661" class="small" style="font-weight:700;fill:#69479A">Reward identification</text>
+  <rect x="820" y="677" width="242" height="52" rx="10" fill="#F1ECFA"/>
+  <text x="941" y="710" text-anchor="middle" class="math" style="fill:#69479A">r₂ = R(s₀, τ₂)</text>
+
+  <!-- Selected branch continues -->
+  <path d="M1085 280 C1110 280, 1110 280, 1135 280" class="branch-selected"/>
+  <text x="1110" y="256" text-anchor="middle" class="small" style="fill:#147764;font-weight:700">expand</text>
+
+  <!-- Second task probability chart / next scene -->
+  <g filter="url(#shadow)">
+    <rect x="1150" y="187" width="275" height="388" rx="20" fill="#FFFFFF" stroke="#9AD9CC" stroke-width="2.5"/>
+  </g>
+  <rect x="1170" y="207" width="235" height="52" rx="12" fill="#EAF8F5"/>
+  <text x="1287.5" y="230" text-anchor="middle" class="small" style="font-weight:700;fill:#147764">next scene after Task 1</text>
+  <text x="1287.5" y="250" text-anchor="middle" class="math" style="fill:#147764">s₁</text>
+  <text x="1287.5" y="298" text-anchor="middle" class="card-title">Task sampling</text>
+  <text x="1287.5" y="325" text-anchor="middle" class="math">π(τ | s₁)</text>
+
+  <line x1="1192" y1="496" x2="1382" y2="496" stroke="#9DADBD" stroke-width="1.5"/>
+  <line x1="1192" y1="355" x2="1192" y2="496" stroke="#9DADBD" stroke-width="1.5"/>
+  <line x1="1192" y1="425.5" x2="1382" y2="425.5" stroke="#E3EAF1" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <text x="1179" y="430" text-anchor="end" class="tiny">0.5</text>
+  <text x="1179" y="360" text-anchor="end" class="tiny">1.0</text>
+  <rect x="1220" y="454" width="55" height="42" rx="7" fill="#5B8DEF"/>
+  <rect x="1303" y="397" width="55" height="99" rx="7" fill="#A16DD3"/>
+  <text x="1247.5" y="443" text-anchor="middle" class="prob">0.30</text>
+  <text x="1330.5" y="386" text-anchor="middle" class="prob">0.70</text>
+  <text x="1247.5" y="524" text-anchor="middle" class="small">Task 3</text>
+  <text x="1330.5" y="524" text-anchor="middle" class="small">Task 4</text>
+  <text x="1287.5" y="556" text-anchor="middle" class="small">re-sample <tspan class="math">τ ∼ π(τ | s₁)</tspan></text>
+
+  <!-- Second sampling junction -->
+  <path d="M1425 385 H1460" class="branch"/>
+  <circle cx="1499" cy="385" r="37" fill="#24405F" filter="url(#shadow)"/>
+  <text x="1499" y="381" text-anchor="middle" style="font-size:13px;font-weight:700;fill:#FFFFFF">SAMPLE</text>
+  <text x="1499" y="400" text-anchor="middle" style="font-size:12px;fill:#CFE4F3">again</text>
+
+  <!-- Second pair of branches -->
+  <path d="M1527 361 C1560 334, 1560 287, 1590 263" class="branch"/>
+  <path d="M1527 408 C1560 436, 1560 529, 1590 550" class="branch"/>
+  <rect x="1536" y="294" width="88" height="31" rx="15.5" fill="#E9F0FF"/>
+  <text x="1580" y="315" text-anchor="middle" class="prob" style="fill:#3569C7">p = 0.30</text>
+  <rect x="1536" y="465" width="88" height="31" rx="15.5" fill="#F2EAFE"/>
+  <text x="1580" y="486" text-anchor="middle" class="prob" style="fill:#7440A4">p = 0.70</text>
+
+  <circle cx="1560" cy="369" r="3.5" fill="#A9B6C4"/>
+  <circle cx="1560" cy="385" r="3.5" fill="#A9B6C4"/>
+  <circle cx="1560" cy="401" r="3.5" fill="#A9B6C4"/>
+
+  <!-- Second-level task cards -->
+  <g filter="url(#shadow)">
+    <rect x="1604" y="190" width="246" height="170" rx="18" fill="#FFFFFF" stroke="#8FB2F5" stroke-width="2"/>
+  </g>
+  <text x="1624" y="235" class="card-title">Task 3 <tspan class="math">(τ₃)</tspan></text>
+  <text x="1624" y="267" class="small" style="font-weight:700;fill:#69479A">Reward identification</text>
+  <rect x="1624" y="285" width="206" height="45" rx="10" fill="#F1ECFA"/>
+  <text x="1727" y="314" text-anchor="middle" class="math" style="fill:#69479A">r₃ = R(s₁, τ₃)</text>
+
+  <g filter="url(#shadow)">
+    <rect x="1604" y="492" width="246" height="170" rx="18" fill="#FFFFFF" stroke="#C3A0E5" stroke-width="2"/>
+  </g>
+  <text x="1624" y="537" class="card-title">Task 4 <tspan class="math">(τ₄)</tspan></text>
+  <text x="1624" y="569" class="small" style="font-weight:700;fill:#69479A">Reward identification</text>
+  <rect x="1624" y="587" width="206" height="45" rx="10" fill="#F1ECFA"/>
+  <text x="1727" y="616" text-anchor="middle" class="math" style="fill:#69479A">r₄ = R(s₁, τ₄)</text>
+
+  <!-- Bottom explanatory legend -->
+  <rect x="70" y="816" width="1780" height="49" rx="14" fill="#F7F9FC" stroke="#E0E7EF"/>
+  <line x1="102" y1="840" x2="153" y2="840" stroke="#24405F" stroke-width="3.2" marker-end="url(#arrowNavy)"/>
+  <text x="170" y="846" class="small">branch = sampled task, weighted by <tspan class="math">π(τ | s)</tspan></text>
+  <rect x="565" y="826" width="30" height="27" rx="6" fill="#F1ECFA"/>
+  <text x="612" y="846" class="small">reward is identified for that sampled task</text>
+  <line x1="1020" y1="840" x2="1071" y2="840" stroke="#1B9E87" stroke-width="5" marker-end="url(#arrowTeal)"/>
+  <text x="1090" y="846" class="small">selected branch is expanded; remaining branches are omitted for space</text>
+</svg>

@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: resfit
+Version: 0.1.0
+Summary: Residual off-policy RL / ResFiT package
+Requires-Python: >=3.8
+License-File: LICENSE

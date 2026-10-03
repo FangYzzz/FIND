@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1872" height="1118" viewBox="0 0 1872 1118" role="img" aria-labelledby="title desc">
+  <title id="title">Task sampling and reward identification tree</title>
+  <desc id="desc">A paper-style three-panel diagram showing a scene-conditioned task distribution, probability-driven task branches with identified rewards, and re-sampling from one selected branch.</desc>
+
+  <defs>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2878A8"/>
+    </marker>
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#4B5A67"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #27313B; }
+      .panel-title { font-size: 34px; font-weight: 700; letter-spacing: .2px; }
+      .node-title { font-size: 27px; font-weight: 500; }
+      .node-subtitle { font-size: 21px; font-weight: 700; }
+      .axis-label { font-size: 25px; }
+      .tick { font-size: 20px; fill: #33414D; }
+      .small { font-size: 18px; fill: #687581; }
+      .tiny { font-size: 16px; fill: #77828C; }
+      .math { font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-style: italic; }
+      .prob { font-size: 19px; font-weight: 700; fill: #C46E08; }
+      .reward { font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-style: italic; fill: #2878A8; }
+      .axis { stroke: #8D9AA5; stroke-width: 1.8; }
+      .grid { stroke: #D8E0E6; stroke-width: 1.5; }
+      .branch { fill: none; stroke: #2878A8; stroke-width: 4.5; marker-end: url(#arrowBlue); }
+      .branch-selected { fill: none; stroke: #2878A8; stroke-width: 6.5; marker-end: url(#arrowBlue); }
+      .flow { fill: none; stroke: #4B5A67; stroke-width: 3; marker-end: url(#arrowGray); }
+      .orange { fill: #C46E08; }
+      .blue { fill: #2878A8; }
+    </style>
+  </defs>
+
+  <rect width="1872" height="1118" fill="#FFFFFF"/>
+
+  <!-- Panel titles, matched to the reference figure -->
+  <text x="125" y="66" class="panel-title">(a) Scene and task probabilities</text>
+  <text x="682" y="66" class="panel-title">(b) Task sampling and rewards</text>
+  <text x="1255" y="66" class="panel-title">(c) Re-sampling selected branch</text>
+
+  <!-- ============================================================ -->
+  <!-- (a) Scene and probability bar chart                         -->
+  <!-- ============================================================ -->
+
+  <text x="192" y="151" text-anchor="middle" class="node-title">Scene <tspan class="math">s₀</tspan></text>
+  <rect x="125" y="181" width="150" height="190" fill="#FFFFFF" stroke="#A8B4BE" stroke-width="1.8"/>
+
+  <!-- minimal robot/tabletop scene -->
+  <line x1="143" y1="329" x2="257" y2="329" stroke="#8FA5B4" stroke-width="7" stroke-linecap="round"/>
+  <line x1="157" y1="329" x2="157" y2="354" stroke="#8FA5B4" stroke-width="6" stroke-linecap="round"/>
+  <line x1="243" y1="329" x2="243" y2="354" stroke="#8FA5B4" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="161" cy="225" r="12" fill="#2878A8"/>
+  <circle cx="161" cy="225" r="4" fill="#FFFFFF"/>
+  <path d="M161 238 L181 265 L207 237 L226 255" fill="none" stroke="#2878A8" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M224 252 l12 -8 M225 257 l13 5" fill="none" stroke="#27313B" stroke-width="4" stroke-linecap="round"/>
+  <rect x="220" y="292" width="24" height="25" rx="3" fill="#C46E08" opacity=".90"/>
+  <text x="200" y="406" text-anchor="middle" class="small">observation <tspan class="math">o₀</tspan></text>
+
+  <!-- flow from scene to distribution -->
+  <path d="M287 276 H326" class="flow"/>
+
+  <!-- Initial bar chart -->
+  <text x="472" y="132" text-anchor="middle" class="node-title">Task distribution</text>
+  <text x="472" y="160" text-anchor="middle" class="math">π(τ | s₀)</text>
+
+  <line x1="352" y1="371" x2="600" y2="371" class="axis"/>
+  <line x1="352" y1="191" x2="352" y2="371" class="axis"/>
+  <line x1="352" y1="281" x2="600" y2="281" class="grid"/>
+  <line x1="352" y1="191" x2="600" y2="191" class="grid"/>
+  <text x="337" y="377" text-anchor="end" class="tick">0</text>
+  <text x="337" y="288" text-anchor="end" class="tick">50</text>
+  <text x="337" y="198" text-anchor="end" class="tick">100</text>
+  <text x="314" y="285" transform="rotate(-90 314 285)" text-anchor="middle" class="axis-label" style="fill:#C46E08">Prob. (%)</text>
+
+  <rect x="389" y="281" width="56" height="90" class="orange" opacity=".92"/>
+  <rect x="476" y="281" width="56" height="90" class="orange" opacity=".92"/>
+  <text x="417" y="269" text-anchor="middle" class="prob">50</text>
+  <text x="504" y="269" text-anchor="middle" class="prob">50</text>
+  <text x="417" y="401" text-anchor="middle" class="tick">T1</text>
+  <text x="504" y="401" text-anchor="middle" class="tick">T2</text>
+  <text x="566" y="401" text-anchor="middle" class="tick">…</text>
+  <text x="476" y="447" text-anchor="middle" class="axis-label">Candidate task</text>
+
+  <!-- ============================================================ -->
+  <!-- (b) First probability-driven split and reward identification -->
+  <!-- ============================================================ -->
+
+  <!-- sampling junction -->
+  <path d="M611 283 H669" class="flow"/>
+  <circle cx="692" cy="283" r="8" class="blue"/>
+  <text x="681" y="391" text-anchor="middle" class="small">sample <tspan class="math">τ ∼ π(τ | s₀)</tspan></text>
+
+  <!-- two shown branches -->
+  <path d="M698 276 C747 230, 765 184, 817 165" class="branch-selected"/>
+  <path d="M698 291 C747 345, 765 548, 817 574" class="branch"/>
+  <text x="753" y="211" class="prob">p = 0.50</text>
+  <text x="752" y="502" class="prob">p = 0.50</text>
+
+  <!-- omitted branches -->
+  <circle cx="754" cy="298" r="4" fill="#8D9AA5"/>
+  <circle cx="754" cy="319" r="4" fill="#8D9AA5"/>
+  <circle cx="754" cy="340" r="4" fill="#8D9AA5"/>
+  <text x="772" y="325" class="tiny">other branches omitted</text>
+
+  <!-- Task 1 reward block, intentionally unboxed like the reference plots -->
+  <text x="835" y="141" class="node-title">T1  Sampled task 1</text>
+  <line x1="835" y1="159" x2="1135" y2="159" stroke="#D8E0E6" stroke-width="1.5"/>
+  <circle cx="852" cy="197" r="6" class="blue"/>
+  <text x="872" y="204" class="node-subtitle" style="fill:#2878A8">Reward identification</text>
+  <text x="872" y="247" class="reward">r₁ = R(s₀, τ₁)</text>
+  <line x1="835" y1="268" x2="1135" y2="268" stroke="#2878A8" stroke-width="3"/>
+  <text x="835" y="300" class="tiny">task-conditioned reward, identified after sampling</text>
+
+  <!-- selected indicator and continuation -->
+  <text x="1150" y="211" text-anchor="middle" class="prob">selected branch</text>
+  <path d="M1135 268 C1168 245, 1168 184, 1212 154" class="branch-selected"/>
+
+  <!-- Task 2 reward block -->
+  <text x="835" y="560" class="node-title">T2  Sampled task 2</text>
+  <line x1="835" y1="578" x2="1135" y2="578" stroke="#D8E0E6" stroke-width="1.5"/>
+  <circle cx="852" cy="616" r="6" class="blue"/>
+  <text x="872" y="623" class="node-subtitle" style="fill:#2878A8">Reward identification</text>
+  <text x="872" y="666" class="reward">r₂ = R(s₀, τ₂)</text>
+  <line x1="835" y1="687" x2="1135" y2="687" stroke="#2878A8" stroke-width="3"/>
+  <text x="835" y="719" class="tiny">shown but not expanded in this illustration</text>
+
+  <!-- ============================================================ -->
+  <!-- (c) Re-sampling at the next scene                            -->
+  <!-- ============================================================ -->
+
+  <text x="1293" y="130" text-anchor="middle" class="node-title">Next scene <tspan class="math">s₁</tspan></text>
+  <text x="1293" y="160" text-anchor="middle" class="small">after executing Task 1</text>
+
+  <!-- second probability bar chart -->
+  <text x="1293" y="210" text-anchor="middle" class="math">π(τ | s₁)</text>
+  <line x1="1194" y1="455" x2="1424" y2="455" class="axis"/>
+  <line x1="1194" y1="255" x2="1194" y2="455" class="axis"/>
+  <line x1="1194" y1="355" x2="1424" y2="355" class="grid"/>
+  <line x1="1194" y1="255" x2="1424" y2="255" class="grid"/>
+  <text x="1179" y="461" text-anchor="end" class="tick">0</text>
+  <text x="1179" y="362" text-anchor="end" class="tick">50</text>
+  <text x="1179" y="262" text-anchor="end" class="tick">100</text>
+  <text x="1152" y="357" transform="rotate(-90 1152 357)" text-anchor="middle" class="axis-label" style="fill:#C46E08">Prob. (%)</text>
+  <rect x="1232" y="395" width="56" height="60" class="orange" opacity=".92"/>
+  <rect x="1320" y="315" width="56" height="140" class="orange" opacity=".92"/>
+  <text x="1260" y="382" text-anchor="middle" class="prob">30</text>
+  <text x="1348" y="302" text-anchor="middle" class="prob">70</text>
+  <text x="1260" y="486" text-anchor="middle" class="tick">T3</text>
+  <text x="1348" y="486" text-anchor="middle" class="tick">T4</text>
+  <text x="1400" y="486" text-anchor="middle" class="tick">…</text>
+  <text x="1309" y="532" text-anchor="middle" class="axis-label">Candidate task</text>
+
+  <!-- second sampling junction and branches -->
+  <path d="M1428 358 H1477" class="flow"/>
+  <circle cx="1498" cy="358" r="8" class="blue"/>
+  <text x="1498" y="396" text-anchor="middle" class="small">sample again</text>
+  <path d="M1504 351 C1540 315, 1542 220, 1584 192" class="branch"/>
+  <path d="M1504 365 C1540 404, 1542 598, 1584 625" class="branch"/>
+  <text x="1519" y="271" class="prob">p = 0.30</text>
+  <text x="1519" y="558" class="prob">p = 0.70</text>
+  <circle cx="1546" cy="342" r="3.7" fill="#8D9AA5"/>
+  <circle cx="1546" cy="358" r="3.7" fill="#8D9AA5"/>
+  <circle cx="1546" cy="374" r="3.7" fill="#8D9AA5"/>
+
+  <!-- Task 3 reward -->
+  <text x="1600" y="174" class="node-title">T3  Sampled task 3</text>
+  <line x1="1600" y1="193" x2="1810" y2="193" stroke="#D8E0E6" stroke-width="1.5"/>
+  <text x="1600" y="232" class="node-subtitle" style="fill:#2878A8">Reward identification</text>
+  <text x="1600" y="272" class="reward">r₃ = R(s₁, τ₃)</text>
+
+  <!-- Task 4 reward -->
+  <text x="1600" y="607" class="node-title">T4  Sampled task 4</text>
+  <line x1="1600" y1="626" x2="1810" y2="626" stroke="#D8E0E6" stroke-width="1.5"/>
+  <text x="1600" y="665" class="node-subtitle" style="fill:#2878A8">Reward identification</text>
+  <text x="1600" y="705" class="reward">r₄ = R(s₁, τ₄)</text>
+
+  <!-- ============================================================ -->
+  <!-- Bottom explanatory strip and legend                          -->
+  <!-- ============================================================ -->
+
+  <line x1="125" y1="823" x2="1795" y2="823" stroke="#D8E0E6" stroke-width="1.5"/>
+  <text x="125" y="873" class="panel-title" style="font-size:28px">Tree interpretation</text>
+
+  <line x1="125" y1="928" x2="188" y2="928" stroke="#2878A8" stroke-width="5"/>
+  <text x="204" y="936" class="axis-label">Sampled-task branch</text>
+
+  <rect x="500" y="917" width="28" height="20" class="orange"/>
+  <text x="544" y="936" class="axis-label">Sampling probability</text>
+
+  <circle cx="893" cy="927" r="7" class="blue"/>
+  <text x="914" y="936" class="axis-label">Task-conditioned reward identification</text>
+
+  <line x1="1391" y1="928" x2="1454" y2="928" stroke="#8D9AA5" stroke-width="3" stroke-dasharray="7 6"/>
+  <text x="1470" y="936" class="axis-label">Unshown branches</text>
+
+  <text x="125" y="1014" class="small">Only two branches are drawn at each sampling step for readability.</text>
+  <text x="1795" y="1014" text-anchor="end" class="small">Second-step probabilities (30% / 70%) are illustrative and editable.</text>
+</svg>

@@ -1,0 +1,43 @@
+# Python 3.11 residual training dependencies, curated from the residual environment.
+# Install OpenPI client, Droid client code, and hardware SDKs separately; see README.md.
+
+torch==2.7.1
+torchvision==0.22.1
+torchrl==0.9.2
+tensordict==0.9.1
+einops==0.8.2
+
+# NumPy/OpenCV pins differ from the source environment to avoid dependency conflicts.
+numpy==1.26.4
+scipy==1.17.1
+opencv-python-headless==4.11.0.86
+pillow==12.2.0
+imageio[ffmpeg]==2.37.4
+matplotlib==3.10.6
+
+lerobot==0.3.3
+datasets==3.6.0
+pandas==2.3.3
+draccus==0.10.0
+av==18.0.0
+torchcodec==0.4.0; sys_platform == "linux" and platform_machine == "x86_64"
+huggingface-hub==0.36.2
+transformers==4.57.6
+sentence-transformers==5.6.1
+
+hydra-core==1.3.4
+omegaconf==2.3.1
+PyYAML==6.0.3
+gym==0.26.2
+psutil==7.2.2
+tabulate==0.10.0
+tqdm==4.68.4
+wandb==0.28.0
+
+openai==2.48.0
+python-dotenv==1.2.2
+loguru==0.7.3
+json-numpy==2.1.1
+requests==2.34.2
+zerorpc==0.6.3
+uvicorn==0.51.0

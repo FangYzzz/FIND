@@ -1,0 +1,6 @@
+[submodule "droid/droid/fairo"]
+	path = droid/droid/fairo
+	url = https://github.com/FangYzzz/fairo.git
+[submodule "droid/droid/oculus_reader"]
+	path = droid/droid/oculus_reader
+	url = https://github.com/rail-berkeley/oculus_reader.git

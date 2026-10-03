@@ -1,0 +1,17 @@
+artifacts/
+outputs/
+__pycache__
+wandb/
+offline_buffer_*
+online_buffer_*
+bc_run_*
+run_*
+deps/
+*.log
+.env
+**/.env
+*.png
+debug_images/
+rl_token_checkpoints/
+rl_token_checkpoints_*/
+vla_embedding_cache/
