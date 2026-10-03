@@ -157,7 +157,7 @@ RESIDUAL_CONFIG="your_residual_config"
 
 python resfit/rl_finetuning/scripts/train_residual_td3_pi05_parallel_lang_chunk.py \
     --config-name="$RESIDUAL_CONFIG" \
-    chunk_len=5 \
+    chunk_len=1 \
     algo.n_step=5 \
     algo.prefetch_batches=4 \
     algo.gamma=0.995 \
