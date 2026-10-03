@@ -87,8 +87,7 @@ Hardware and optional tools require separate setup:
 
 - Online ZED camera access requires the ZED SDK and its matching `pyzed` wheel. They are not included in `requirements.txt`. The source environment's `pyzed 5.1` requires NumPy 2, which conflicts with the current OpenPI client's NumPy `<2` constraint; resolve this SDK/client compatibility issue before online rollouts.
 - Video datasets decoded with TorchCodec require FFmpeg shared libraries; follow the [TorchCodec installation guide](https://github.com/meta-pytorch/torchcodec#installing-torchcodec).
-- Claude reward-model comparisons additionally require `pip install anthropic==1.5.0`. This optional SDK is not needed for residual training.
-- The legacy `scripts/task_reward_generator_zedx.py` helper still imports GroundingDINO and FastAPI and is outside this default dependency set.
+
 
 ## Running
 
