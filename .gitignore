@@ -48,3 +48,6 @@ scripts/masked_annotated_image_*.jpg
 
 # Keep generated figures local
 /figures/
+
+# Keep repository-root scripts local
+/scripts/
