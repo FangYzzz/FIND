@@ -45,3 +45,6 @@ scripts/masked_annotated_image_*.jpg
 
 # Local evaluation notebook with captured output
 /droid/scripts/evaluation/results.ipynb
+
+# Keep generated figures local
+/figures/
