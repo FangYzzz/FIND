@@ -175,7 +175,7 @@ python resfit/rl_finetuning/scripts/train_residual_td3_pi05_parallel_lang_chunk.
     algo.stddev_max=0.003 \
     algo.stddev_min=0.003 \
     algo.stddev_schedule=0.003 \
-    algo.random_action_noise_scale=0.05 \
+    algo.random_action_noise_scale=0.04 \
     algo.buffer_size=100000 \
     agent.actor.action_scale=0.04 \
     agent.actor_lr=1e-6 \
