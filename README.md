@@ -15,8 +15,8 @@ Many thanks to [amazon-far/residual-offpolicy-rl](https://github.com/amazon-far/
 Clone the repository together with its third-party submodules:
 
 ```bash
-git clone --recurse-submodules https://github.com/FangYzzz/FIND.git self_vla
-cd self_vla
+git clone --recurse-submodules https://github.com/FangYzzz/FIND.git
+cd FIND
 ```
 
 For an existing checkout, run `git submodule update --init --recursive` from the repository root.
@@ -91,14 +91,14 @@ Hardware and optional tools require separate setup:
 
 ## Running
 
-Start the policy server, robot server, and gripper server before launching training. Each long-running process needs its own terminal.
+Start the policy server, robot server, gripper server, and Franka interface server before launching training. Each long-running process needs its own terminal.
 
-Replace `/path/to/self_vla`, checkpoint paths, and all `your_*_config` placeholders with your own settings. These configuration names must already be registered in OpenPI, Polymetis, or the residual trainer; the placeholders are not built-in configurations. Also configure your dataset paths, camera settings, robot/server addresses, and `OPENAI_API_KEY` before online training.
+Replace `/path/to/FIND`, checkpoint paths, and all `your_*_config` placeholders with your own settings. These configuration names must already be registered in OpenPI, Polymetis, or the residual trainer; the placeholders are not built-in configurations. Also configure your dataset paths, camera settings, robot/server addresses, and `OPENAI_API_KEY` before online training.
 
 ### 1. Start the OpenPI policy server
 
 ```bash
-cd /path/to/self_vla/openpi
+cd /path/to/FIND/openpi
 OPENPI_CONFIG="your_openpi_config"
 CHECKPOINT_DIR="/absolute/path/to/checkpoint"
 
@@ -124,7 +124,7 @@ In the robot-server terminal:
 
 ```bash
 conda activate controller
-cd /path/to/self_vla
+cd /path/to/FIND
 ROBOT_CLIENT_CONFIG="your_robot_client_config"
 
 python droid/droid/fairo/polymetis/polymetis/python/scripts/launch_robot.py \
@@ -135,7 +135,7 @@ In a separate gripper-server terminal:
 
 ```bash
 conda activate controller
-cd /path/to/self_vla
+cd /path/to/FIND
 GRIPPER_CONFIG="your_gripper_config"
 
 python droid/droid/fairo/polymetis/polymetis/python/scripts/launch_gripper.py \
@@ -144,13 +144,21 @@ python droid/droid/fairo/polymetis/polymetis/python/scripts/launch_gripper.py \
 
 Choose the `robot_client` and `gripper` configurations that match your hardware from the Polymetis configuration groups.
 
+In a separate terminal, start the Franka interface server from the parent directory of your `FIND` checkout:
+
+```bash
+conda activate controller
+cd /path/to
+python FIND/droid/droid/franka/franka_server.py
+```
+
 ### 3. Run residual training
 
 In the training terminal:
 
 ```bash
 conda activate residual
-cd /path/to/self_vla
+cd /path/to/FIND
 export PYTHONPATH="$PWD/droid${PYTHONPATH:+:$PYTHONPATH}"
 cd residual-offpolicy-rl
 RESIDUAL_CONFIG="your_residual_config"
